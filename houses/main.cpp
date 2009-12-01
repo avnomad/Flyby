@@ -29,10 +29,9 @@ void display()
 	glTranslated(-px,-py,-pz);
 
 
-	//GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	//GLfloat mat_shininess[] = { 50.0 };
-	//glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	//glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+	GLfloat wire_material[4] = {0.0,0.75,0.0,1.0};
+	glMaterialfv(GL_BACK,GL_AMBIENT_AND_DIFFUSE,wire_material);
+
 	glutSolidSphere(10,100,100);
 	glPushMatrix();
 		glTranslated(15,0,0);
@@ -149,6 +148,7 @@ int main(int argc, char **argv)
 	glutInitWindowPosition(800,160);
 	glutCreateWindow("Creating Geometry");
 	glutSetKeyRepeat(GLUT_KEY_REPEAT_ON);
+	glutFullScreen();
 
 	// glew initialization
 	glewInit();
@@ -158,6 +158,13 @@ int main(int argc, char **argv)
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+	glPolygonMode(GL_BACK,GL_LINE);
+
+	GLfloat black[4] = {0.0,0.0,0.0,1.0};
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT,black);
+	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER,GL_TRUE);
+	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE,GL_TRUE);
+
 
 	GLfloat lightPosition[4] = {0,0,20,1};
 	glLightfv(GL_LIGHT0,GL_POSITION,lightPosition);
