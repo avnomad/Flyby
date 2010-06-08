@@ -3,6 +3,16 @@
 #include <cstdlib>
 #include <cmath>
 
+#include <iostream>
+using std::cout;
+using std::cin;
+using std::endl;
+using std::cerr;
+using std::clog;
+using std::left;
+
+
+
 #define PI 3.1415926535897932385
 
 // globals
@@ -16,6 +26,11 @@ int oldx = 0;
 int oldy = 0;
 
 const double farClip = 300;
+const double plane0[4] = {cos(PI/3),0,sin(PI/3),0};
+const double plane1[4] = {0,0,1,0};
+const double plane2[4] = {cos(PI/3),0,-sin(PI/3),0};
+const double plane3[4] = {0,0,-1,0};
+GLUquadric *const options = gluNewQuadric();
 
 void display()
 {
@@ -32,7 +47,24 @@ void display()
 	GLfloat wire_material[4] = {0.0,0.75,0.0,1.0};
 	glMaterialfv(GL_BACK,GL_AMBIENT_AND_DIFFUSE,wire_material);
 
+	glEnable(GL_CLIP_DISTANCE0);
+	glEnable(GL_CLIP_DISTANCE1);
+	glClipPlane(GL_CLIP_DISTANCE0,plane0);
+	glClipPlane(GL_CLIP_DISTANCE1,plane1);
 	glutSolidSphere(10,100,100);
+	glClipPlane(GL_CLIP_DISTANCE0,plane2);
+	glClipPlane(GL_CLIP_DISTANCE1,plane3);
+	glutSolidSphere(10,100,100);
+	glDisable(GL_CLIP_DISTANCE0);
+	glDisable(GL_CLIP_DISTANCE1);
+	glPushMatrix();
+		glRotated(-150,0,1,0);
+		gluPartialDisk(options,0,10,50,100,0,180);
+	glPopMatrix();
+	glPushMatrix();
+		glRotated(-30,0,1,0);
+		gluPartialDisk(options,0,10,50,100,180,180);
+	glPopMatrix();
 	glPushMatrix();
 		glTranslated(15,0,0);
 		glPushMatrix();
@@ -143,7 +175,7 @@ int main(int argc, char **argv)
 {
 	// glut initialization
 	glutInit(&argc,argv);
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE);
 	glutInitWindowSize(320,320);
 	glutInitWindowPosition(800,160);
 	glutCreateWindow("Creating Geometry");
@@ -154,21 +186,30 @@ int main(int argc, char **argv)
 	glewInit();
 
 	// OpenGL initialization
-	glClearDepth(farClip);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-	glPolygonMode(GL_BACK,GL_LINE);
+	//glPolygonMode(GL_BACK,GL_LINE);
 
 	GLfloat black[4] = {0.0,0.0,0.0,1.0};
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT,black);
 	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER,GL_TRUE);
 	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE,GL_TRUE);
 
-
 	GLfloat lightPosition[4] = {0,0,20,1};
 	glLightfv(GL_LIGHT0,GL_POSITION,lightPosition);
 
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+	glLineWidth(0.5);
+
+	gluQuadricDrawStyle(options,GL_FILL);
+	gluQuadricNormals(options,GL_SMOOTH);
+
+	// implementation dependant constants query
+	int temp;
+	glGetIntegerv(GL_MAX_CLIP_DISTANCES,&temp);
+	cout << "max clip distances:\t" << temp << endl;
 
 	// event handling initialization
 	glutDisplayFunc(display);
