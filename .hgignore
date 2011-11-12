@@ -1,0 +1,8 @@
+syntax: regexp
+Debug/*
+ipch/*
+Release/*
+syntax: glob
+houses.opensdf
+houses.sdf
+houses.suo
