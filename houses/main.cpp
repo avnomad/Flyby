@@ -94,7 +94,7 @@ void display()
 
 void mouse(int key, int state, int x, int y)
 {
-	if(key == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+	if(state == GLUT_DOWN)
 	{
 		oldx = x;
 		oldy = y;
