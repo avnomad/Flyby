@@ -12,7 +12,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{11ACD803-B898-4565-A117-864D8FB46EB8}</ProjectGuid>
-    <RootNamespace>houses</RootNamespace>
+    <RootNamespace>Flyby</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">

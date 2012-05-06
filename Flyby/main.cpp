@@ -178,7 +178,7 @@ int main(int argc, char **argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE);
 	glutInitWindowSize(320,320);
 	glutInitWindowPosition(800,160);
-	glutCreateWindow("Creating Geometry");
+	glutCreateWindow("Flyby");
 	glutSetKeyRepeat(GLUT_KEY_REPEAT_ON);
 	glutFullScreen();
 

@@ -3,6 +3,6 @@ Debug/*
 ipch/*
 Release/*
 syntax: glob
-houses.opensdf
-houses.sdf
-houses.suo
+Flyby.opensdf
+Flyby.sdf
+Flyby.suo
