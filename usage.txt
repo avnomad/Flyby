@@ -1,0 +1,13 @@
+Usage:
+
+Look around by dragging the mouse. (any button)
+(move mouse away from you to look up)
+
+Press:
+	a      to move left
+	d      to move right
+	w      to move forward
+	s      to move backwards
+	space  to move up
+	c      to move down
+	escape to exit

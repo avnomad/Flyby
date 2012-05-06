@@ -29,6 +29,18 @@ using std::cerr;
 using std::clog;
 using std::left;
 
+#include <algorithm>
+using std::copy;
+
+#include <fstream>
+using std::ifstream;
+
+#include <ios>
+using std::noskipws;
+
+#include <iterator>
+using std::istream_iterator;
+using std::ostream_iterator;
 
 
 #define PI 3.1415926535897932385
@@ -227,7 +239,21 @@ int main(int argc, char **argv)
 	// implementation dependant constants query
 	int temp;
 	glGetIntegerv(GL_MAX_CLIP_DISTANCES,&temp);
-	cout << "max clip distances:\t" << temp << endl;
+	cout << "max clip distances:\t" << temp << "\n" << endl;
+
+	// usage infromation output
+	char usageFilePath[] = "../usage.txt";
+	ifstream in(usageFilePath,std::ios::binary);
+	if(in)
+	{
+		in >> noskipws;
+		copy(istream_iterator<char>(in),istream_iterator<char>(),ostream_iterator<char>(cout));
+	}
+	else
+	{
+		cerr << "Cannot read usage from file \"" << usageFilePath << "\"" << endl;
+	} // end else
+
 
 	// event handling initialization
 	glutDisplayFunc(display);
