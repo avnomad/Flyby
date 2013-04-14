@@ -1,3 +1,5 @@
+	Copyright (C) 2009-2012 Vaptistis Anogeianakis <nomad@cornercase.gr>
+
 Usage:
 
 Look around by dragging the mouse. (any button)
